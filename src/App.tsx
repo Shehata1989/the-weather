@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import "./App.css";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
@@ -10,7 +11,7 @@ import { useEffect, useReducer, useState } from "react";
 import moment from "moment";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-
+// @ts-ignore
 import "moment/dist/locale/ar";
 
 export interface IAPI {
