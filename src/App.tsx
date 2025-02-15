@@ -96,7 +96,7 @@ function App() {
           <div className="content flex flex-col justify-center gap-3">
             <MultipleSelect city={city} setCity={setCity} />
 
-            <Box className="font-bold bg-white/20 backdrop-blur-3xl p-10 rounded-lg">
+            <Box className="font-bold bg-white/20 backdrop-blur-3xl p-5 md:p-10 rounded-lg">
 
               {/* City And Time */}
               <div className="title flex justify-between items-center mb-3 text-xl">
@@ -108,9 +108,9 @@ function App() {
 
               {/* Temperature And Image */}
               <div className="flex justify-between items-center">
-                <div className="flex flex-col gap-3 justify-center">
-                  <div className="flex gap-5 items-center">
-                    <h2 className="text-7xl">
+                <div className="flex flex-col gap-3">
+                  <div className="flex flex-col md:flex-row items-start">
+                    <h2 className="text-5xl md:text-7xl">
                       {state?.temp ?? "--"}
                       <sup>°C</sup>
                     </h2>
@@ -119,9 +119,9 @@ function App() {
 
                   <h2>{state?.description ?? "--"}</h2>
 
-                  <div>
+                  <div className="flex gap-10">
                     <span>
-                      Min: <b>{state?.temp_min ?? "--"}°C</b> |{" "}
+                      Min: <b>{state?.temp_min ?? "--"}°C</b>{" "}
                     </span>
                     <span>
                       Max: <b>{state?.temp_max ?? "--"}°C</b>
@@ -131,7 +131,7 @@ function App() {
 
                 {/* Icon */}
                 <div>
-                  <CloudIcon className="!text-[10rem] !text-white" />
+                  <CloudIcon className="!text-[8rem] !md:text-[10rem] !text-white" />
                 </div>
               </div>
             </Box>

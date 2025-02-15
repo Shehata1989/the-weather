@@ -2,7 +2,6 @@ import { IAPI, IState } from "../App";
 
 export const reducer = (
   state: IState,
-
   action: { type: string; payload: IAPI }
 ): IState => {
   if (action.type === "FETCH_DATA") {
