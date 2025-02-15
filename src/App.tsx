@@ -1,7 +1,7 @@
 import "./App.css";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-// import Button from "@mui/material/Button";
+import Button from "@mui/material/Button";
 import CloudIcon from "@mui/icons-material/Cloud";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { reducer } from "./Reducer/reducer";
@@ -9,8 +9,9 @@ import MultipleSelect from "./Select";
 import { useEffect, useReducer, useState } from "react";
 import moment from "moment";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
-
+import "moment/dist/locale/ar";
 
 export interface IAPI {
   main: {
@@ -35,7 +36,6 @@ export interface IState {
   description: string;
   icon: string;
 }
-
 
 const initialState: IState = {
   temp: 0,
@@ -62,21 +62,24 @@ function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [dateAndTime, setDateAndTime] = useState<string | null>(null);
   const [city, setCity] = useState<City>(defaultCity);
+  const [translate, setTranslate] = useState("en");
 
-  const theme = createTheme({
-    typography: {},
-    palette: {
-      primary: {
-        main: "#33ABBB",
-      },
-    },
-  });
+  const { t, i18n } = useTranslation();
 
-  // Fetch Data
+  const handelTranslateClick = () => {
+    const newLang = translate === "en" ? "ar" : "en";
+    moment.locale(newLang);
+    i18n.changeLanguage(newLang);
+    setTranslate(newLang);
+  };
+
+  useEffect(() => {
+    moment.locale(translate);
+    setDateAndTime(moment().locale(translate).format("LLLL"));
+  }, [translate]);
+
   useEffect(() => {
     if (!city) return;
-
-    setDateAndTime(moment().format("MMMM Do YYYY, h:mm:ss a"));
 
     const API_KEY = "dccc4ff7e4cd9f1ffc2ba4016a6c649c";
     const URL = `https://api.openweathermap.org/data/2.5/weather?lat=${city.lat}&lon=${city.lon}&appid=${API_KEY}`;
@@ -89,18 +92,25 @@ function App() {
       .catch((err) => console.log(err));
   }, [city]);
 
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#33ABBB",
+      },
+    },
+  });
+
   return (
     <ThemeProvider theme={theme}>
       <div className="flex flex-col justify-center items-start h-screen bg-gradient-to-r from-cyan-700 to-teal-400">
         <Container maxWidth="sm">
-          <div className="content flex flex-col justify-center gap-3">
+          <div dir={translate === "en" ? "ltr" : "rtl"} className="content flex flex-col justify-center gap-3">
             <MultipleSelect city={city} setCity={setCity} />
 
             <Box className="font-bold bg-white/20 backdrop-blur-3xl p-5 md:p-10 rounded-lg">
-
               {/* City And Time */}
               <div className="title flex justify-between items-center mb-3 text-xl">
-                <h2>{state?.country || city.name}</h2>
+                <h2>{t(state?.country)}</h2>
                 <h2 className="text-sm">{dateAndTime}</h2>
               </div>
 
@@ -121,7 +131,7 @@ function App() {
 
                   <div className="flex gap-10">
                     <span>
-                      Min: <b>{state?.temp_min ?? "--"}°C</b>{" "}
+                      Min: <b>{state?.temp_min ?? "--"}°C</b>
                     </span>
                     <span>
                       Max: <b>{state?.temp_max ?? "--"}°C</b>
@@ -137,11 +147,15 @@ function App() {
             </Box>
 
             {/* Translation Arabic */}
-            {/* <div>
-              <Button className="!font-bold" variant="contained">
-                Arabic
+            <div dir={translate === "en" ? "ltr" : "rtl"}>
+              <Button
+                onClick={handelTranslateClick}
+                className="!font-bold"
+                variant="contained"
+              >
+                {translate === "en" ? "العربية" : "English"}
               </Button>
-            </div> */}
+            </div>
           </div>
         </Container>
       </div>
