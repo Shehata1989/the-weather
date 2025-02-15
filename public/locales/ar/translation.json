@@ -1,3 +1,17 @@
 {
-  "EG": "مصر"
+  "EG": "مصر",
+  "clear sky": "سماء صافيه",
+  "few clouds": "سحب قليله",
+  "scattered clouds": "غيوم متفرقة",
+  "broken clouds": "سحب متقطعة",
+  "shower rain": "أمطار متقطعة",
+  "rain": "أمطار",
+  "thunderstorm": "عاصفة رعدية",
+  "snow": "ثلج",
+  "mist": "ضباب",
+  "Min": "صغرى",
+  "Max": "كبري",
+  "Alexandria": "الاسكندريه",
+  "Cairo": "القاهره",
+  "City": "المدينة"
 }

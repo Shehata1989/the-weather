@@ -104,7 +104,10 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="flex flex-col justify-center items-start h-screen bg-gradient-to-r from-cyan-700 to-teal-400">
         <Container maxWidth="sm">
-          <div dir={translate === "en" ? "ltr" : "rtl"} className="content flex flex-col justify-center gap-3">
+          <div
+            dir={translate === "en" ? "ltr" : "rtl"}
+            className="content flex flex-col justify-center gap-3"
+          >
             <MultipleSelect city={city} setCity={setCity} />
 
             <Box className="font-bold bg-white/20 backdrop-blur-3xl p-5 md:p-10 rounded-lg">
@@ -127,14 +130,14 @@ function App() {
                     {state?.icon && <img src={state.icon} alt="weather icon" />}
                   </div>
 
-                  <h2>{state?.description ?? "--"}</h2>
+                  <h2>{t(state?.description) ?? "--"}</h2>
 
                   <div className="flex gap-10">
                     <span>
-                      Min: <b>{state?.temp_min ?? "--"}°C</b>
+                      {t("Min")} : <b>{state?.temp_min ?? "--"}°C</b>
                     </span>
                     <span>
-                      Max: <b>{state?.temp_max ?? "--"}°C</b>
+                      {t("Max")} : <b>{state?.temp_max ?? "--"}°C</b>
                     </span>
                   </div>
                 </div>
