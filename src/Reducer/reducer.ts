@@ -19,7 +19,7 @@ export const reducer = (
       temp_max: parseFloat((data.main.temp_max - 273.15).toFixed(1)),
       description: data.weather[0].description || "No data",
       icon: data.weather[0].icon
-        ? `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+        ? `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
         : "",
     };
   }
