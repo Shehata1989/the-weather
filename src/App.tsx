@@ -157,7 +157,7 @@ function App() {
                 className="!font-bold"
                 variant="contained"
               >
-                {translate === "en" ? "العربية" : "English"}
+                {translate === "en" ? "ARABIC" : "انجليزى"}
               </Button>
             </div>
           </div>
