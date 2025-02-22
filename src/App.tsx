@@ -1,18 +1,21 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import "./App.css";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CloudIcon from "@mui/icons-material/Cloud";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { reducer } from "./Reducer/reducer";
+// import { reducer } from "./Redux/weatherApiSlice";
 import MultipleSelect from "./Select";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
-import axios from "axios";
+// import axios from "axios";
 import { useTranslation } from "react-i18next";
 // @ts-ignore
 import "moment/dist/locale/ar";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchWeather } from "./Redux/weatherApiSlice";
+import { RootState, AppDispatch } from "./Redux/store";
+
 
 export interface IAPI {
   main: {
@@ -29,43 +32,14 @@ export interface IAPI {
   }[];
 }
 
-export interface IState {
-  temp: number;
-  country: string;
-  temp_min: number;
-  temp_max: number;
-  description: string;
-  icon: string;
-}
-
-const initialState: IState = {
-  temp: 0,
-  country: "",
-  temp_min: 0,
-  temp_max: 0,
-  description: "",
-  icon: "",
-};
-
-interface City {
-  name: string;
-  lat: number;
-  lon: number;
-}
-
-const defaultCity: City = {
-  name: "Alexandria",
-  lat: 31.205753,
-  lon: 29.924526,
-};
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, initialState);
   const [dateAndTime, setDateAndTime] = useState<string | null>(null);
-  const [city, setCity] = useState<City>(defaultCity);
   const [translate, setTranslate] = useState("en");
-
   const { t, i18n } = useTranslation();
+
+  const { city, dataWeather } = useSelector((state: RootState) => state.weatherApiReducer);
+  const dispatch = useDispatch<AppDispatch>();
 
   const handelTranslateClick = () => {
     const newLang = translate === "en" ? "ar" : "en";
@@ -75,23 +49,10 @@ function App() {
   };
 
   useEffect(() => {
+    dispatch(fetchWeather(city));
     moment.locale(translate);
     setDateAndTime(moment().locale(translate).format("LLLL"));
-  }, [translate]);
-
-  useEffect(() => {
-    if (!city) return;
-
-    const API_KEY = "dccc4ff7e4cd9f1ffc2ba4016a6c649c";
-    const URL = `https://api.openweathermap.org/data/2.5/weather?lat=${city.lat}&lon=${city.lon}&appid=${API_KEY}`;
-
-    axios
-      .get(URL)
-      .then((res) => {
-        dispatch({ type: "FETCH_DATA", payload: res.data });
-      })
-      .catch((err) => console.log(err));
-  }, [city]);
+  }, [translate, dispatch, city]);
 
   const theme = createTheme({
     palette: {
@@ -109,12 +70,12 @@ function App() {
             dir={translate === "en" ? "ltr" : "rtl"}
             className="content flex flex-col justify-center gap-3"
           >
-            <MultipleSelect city={city} setCity={setCity} />
+            <MultipleSelect />
 
             <Box className="font-bold bg-white/20 backdrop-blur-3xl p-5 md:p-10 rounded-lg">
               {/* City And Time */}
               <div className="title flex justify-between items-center mb-3 text-xl">
-                <h2>{t(state?.country)}</h2>
+                <h2>{t(dataWeather?.country)}</h2>
                 <h2 className="text-sm">{dateAndTime}</h2>
               </div>
 
@@ -125,20 +86,22 @@ function App() {
                 <div className="flex flex-col gap-3">
                   <div className="flex flex-col md:flex-row items-start">
                     <h2 className="text-5xl md:text-7xl">
-                      {state?.temp ?? "--"}
+                      {dataWeather?.temp ?? "--"}
                       <sup>°C</sup>
                     </h2>
-                    {state?.icon && <img src={state.icon} alt="weather icon" />}
+                    {dataWeather?.icon && (
+                      <img src={dataWeather.icon} alt="weather icon" />
+                    )}
                   </div>
 
-                  <h2>{t(state?.description) ?? "--"}</h2>
+                  <h2>{t(dataWeather?.description) ?? "--"}</h2>
 
                   <div className="flex gap-10">
                     <span>
-                      {t("Min")} : <b>{state?.temp_min ?? "--"}°C</b>
+                      {t("Min")} : <b>{dataWeather?.temp_min ?? "--"}°C</b>
                     </span>
                     <span>
-                      {t("Max")} : <b>{state?.temp_max ?? "--"}°C</b>
+                      {t("Max")} : <b>{dataWeather?.temp_max ?? "--"}°C</b>
                     </span>
                   </div>
                 </div>
