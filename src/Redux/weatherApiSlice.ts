@@ -1,8 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
-
-
 export interface IState {
   city: {name: string, lat: number, lon: number};
   dataWeather: {
@@ -13,11 +10,12 @@ export interface IState {
     description: string;
     icon: string;
   };
+  isLoading: boolean;
+  errorMassage: string;
 }
 
-
 export const fetchWeather = createAsyncThunk(
-  "weatherApi/fetchWeather", async (city: { name: string; lat: number; lon: number }) => {
+  "fetchWeather", async (city: { name: string; lat: number; lon: number }) => {
     const API_KEY = "dccc4ff7e4cd9f1ffc2ba4016a6c649c";
     const URL = `https://api.openweathermap.org/data/2.5/weather?lat=${city.lat}&lon=${city.lon}&appid=${API_KEY}`;
   
@@ -47,6 +45,8 @@ const initialState: IState = {
     description: "",
     icon: "",
   },
+  isLoading: false,
+  errorMassage: "",
 };
 
 export const weatherApiSlice = createSlice({
@@ -58,9 +58,16 @@ export const weatherApiSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
+    builder.addCase(fetchWeather.pending, (state) => {
+      state.isLoading = true
+    });
     builder.addCase(fetchWeather.fulfilled, (state, action) => {
       state.dataWeather = action.payload;
+      state.isLoading = false
     });
+    builder.addCase(fetchWeather.rejected, (state, action) => {
+      state.errorMassage = action.error.message || "";
+    })
   },
 });
 

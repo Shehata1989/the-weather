@@ -4,17 +4,16 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CloudIcon from "@mui/icons-material/Cloud";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-// import { reducer } from "./Redux/weatherApiSlice";
 import MultipleSelect from "./Select";
 import { useEffect, useState } from "react";
 import moment from "moment";
-// import axios from "axios";
 import { useTranslation } from "react-i18next";
 // @ts-ignore
 import "moment/dist/locale/ar";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWeather } from "./Redux/weatherApiSlice";
 import { RootState, AppDispatch } from "./Redux/store";
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 export interface IAPI {
@@ -38,7 +37,7 @@ function App() {
   const [translate, setTranslate] = useState("en");
   const { t, i18n } = useTranslation();
 
-  const { city, dataWeather } = useSelector((state: RootState) => state.weatherApiReducer);
+  const { city, dataWeather, isLoading, errorMassage } = useSelector((state: RootState) => state.weatherApiReducer);
   const dispatch = useDispatch<AppDispatch>();
 
   const handelTranslateClick = () => {
@@ -86,7 +85,7 @@ function App() {
                 <div className="flex flex-col gap-3">
                   <div className="flex flex-col md:flex-row items-start">
                     <h2 className="text-5xl md:text-7xl">
-                      {dataWeather?.temp ?? "--"}
+                      {isLoading ? <CircularProgress className="!text-white" /> : dataWeather?.temp || errorMassage}
                       <sup>°C</sup>
                     </h2>
                     {dataWeather?.icon && (
