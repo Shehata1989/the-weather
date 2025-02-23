@@ -39,8 +39,6 @@ const {city} = useSelector((state: any ) => {
 
 const dispatch = useDispatch();
 
-
-
   useEffect(() => {
     i18n.changeLanguage("en");
   }, [i18n]);
@@ -55,7 +53,7 @@ const dispatch = useDispatch();
   return (
     <div>
       <FormControl className="w-full">
-        <InputLabel className="!text-black !font-semibold" id="city-select-label">
+        <InputLabel className="!text-zinc-900 !font-semibold" id="city-select-label">
           {t("City")}
         </InputLabel>
         <Select
@@ -65,10 +63,10 @@ const dispatch = useDispatch();
           onChange={handleChange}
           input={<OutlinedInput label="City" />}
           MenuProps={MenuProps}
-          className="!text-black !font-semibold"
+          className="!text-zinc-900 !font-semibold"
         >
           {cities.map((c) => (
-            <MenuItem className="!text-black !font-semibold" key={c.name} value={c.name}>
+            <MenuItem className="!text-zinc-900 !font-semibold" key={c.name} value={c.name}>
               {t(c.name)}
             </MenuItem>
           ))}

@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchWeather } from "./Redux/weatherApiSlice";
 import { RootState, AppDispatch } from "./Redux/store";
 import CircularProgress from '@mui/material/CircularProgress';
-
+import { CssBaseline, Typography } from "@mui/material";
 
 export interface IAPI {
   main: {
@@ -31,7 +31,6 @@ export interface IAPI {
   }[];
 }
 
-
 function App() {
   const [dateAndTime, setDateAndTime] = useState<string | null>(null);
   const [translate, setTranslate] = useState("en");
@@ -42,19 +41,30 @@ function App() {
 
   const handelTranslateClick = () => {
     const newLang = translate === "en" ? "ar" : "en";
+    // Date And Time language
     moment.locale(newLang);
+    // Translate App
     i18n.changeLanguage(newLang);
+    // Update State Translate
     setTranslate(newLang);
   };
 
   useEffect(() => {
+    // Get Api Weather
     dispatch(fetchWeather(city));
+    // Date And Time
     moment.locale(translate);
+    // Update Date And Time
     setDateAndTime(moment().locale(translate).format("LLLL"));
   }, [translate, dispatch, city]);
 
+  // Theme
   const theme = createTheme({
+    typography: {
+      fontFamily: "Rubik, sans-serif",
+    },
     palette: {
+      
       primary: {
         main: "#33ABBB",
       },
@@ -63,19 +73,20 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <div className="flex flex-col justify-center items-start h-screen bg-gradient-to-r from-cyan-700 to-teal-400">
         <Container maxWidth="sm">
           <div
             dir={translate === "en" ? "ltr" : "rtl"}
-            className="content flex flex-col justify-center gap-3"
+            className="content text-zinc-900 flex flex-col justify-center gap-3"
           >
             <MultipleSelect />
 
             <Box className="font-bold bg-white/20 backdrop-blur-3xl p-5 md:p-10 rounded-lg">
               {/* City And Time */}
               <div className="title flex justify-between items-center mb-3 text-xl">
-                <h2>{t(dataWeather?.country)}</h2>
-                <h2 className="text-sm">{dateAndTime}</h2>
+                <Typography className="!font-[900]">{t(dataWeather?.country)}</Typography>
+                <Typography className="!text-sm !font-[800]">{dateAndTime}</Typography>
               </div>
 
               <hr className="my-3" />
@@ -84,24 +95,24 @@ function App() {
               <div className="flex justify-between items-center">
                 <div className="flex flex-col gap-3">
                   <div className="flex flex-col md:flex-row items-start">
-                    <h2 className="text-5xl md:text-7xl">
+                    <Typography className="!text-5xl !md:text-7xl">
                       {isLoading ? <CircularProgress className="!text-white" /> : dataWeather?.temp || errorMassage}
                       <sup>°C</sup>
-                    </h2>
+                    </Typography>
                     {dataWeather?.icon && (
                       <img src={dataWeather.icon} alt="weather icon" />
                     )}
                   </div>
 
-                  <h2>{t(dataWeather?.description) ?? "--"}</h2>
+                  <Typography className="!font-[600]">{t(dataWeather?.description) ?? "--"}</Typography>
 
                   <div className="flex gap-10">
-                    <span>
+                    <Typography className="!font-[800]">
                       {t("Min")} : <b>{dataWeather?.temp_min ?? "--"}°C</b>
-                    </span>
-                    <span>
+                    </Typography>
+                    <Typography className="!font-[800]">
                       {t("Max")} : <b>{dataWeather?.temp_max ?? "--"}°C</b>
-                    </span>
+                    </Typography>
                   </div>
                 </div>
 

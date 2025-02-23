@@ -1,1 +1,23 @@
 @import "tailwindcss";
+
+
+@font-face {
+  font-family: "Rubik";
+  src: url("../public/fonts/Rubik/Rubik-Regular.ttf");
+  font-wight: 500;
+}
+@font-face {
+  font-family: "Rubik, sans-serif";
+  src: url("../public/fonts/Rubik/Rubik-Bold.ttf");
+  font-wight: 600;
+}
+@font-face {
+  font-family: "Rubik";
+  src: url("../public/fonts/Rubik/Rubik-BoldItalic.ttf");
+  font-wight: 800;
+}
+@font-face {
+  font-family: "Rubik";
+  src: url("../public/fonts/Rubik/Rubik-ExtraBold.ttf");
+  font-wight: 900;
+}
