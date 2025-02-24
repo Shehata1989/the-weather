@@ -64,7 +64,7 @@ export default function MultipleSelect() {
   }, [i18n]);
 
   const handleChange = (event: SelectChangeEvent<string>) => {
-    const selectedCity = cities.find((c) => c.name === event.target.value);
+    const selectedCity = cities?.find((c) => c.name === event.target.value);
     if (selectedCity) {
       dispatch(setCity(selectedCity));
     }

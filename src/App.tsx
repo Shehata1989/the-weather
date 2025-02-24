@@ -97,7 +97,6 @@ function App() {
                   <div className="flex flex-col md:flex-row items-start">
                     <Typography className="!text-5xl !md:text-7xl">
                       {isLoading ? <CircularProgress className="!text-white" /> : dataWeather?.temp || errorMassage}
-                      <sup>°C</sup>
                     </Typography>
                     {dataWeather?.icon && (
                       <img src={dataWeather.icon} alt="weather icon" />
@@ -108,10 +107,10 @@ function App() {
 
                   <div className="flex gap-10">
                     <Typography className="!font-[800]">
-                      {t("Min")} : <b>{dataWeather?.temp_min ?? "--"}°C</b>
+                      {t("Min")} : <b>{dataWeather?.temp_min ?? "--"}</b>
                     </Typography>
                     <Typography className="!font-[800]">
-                      {t("Max")} : <b>{dataWeather?.temp_max ?? "--"}°C</b>
+                      {t("Max")} : <b>{dataWeather?.temp_max ?? "--"}</b>
                     </Typography>
                   </div>
                 </div>
