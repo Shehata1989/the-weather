@@ -13,7 +13,7 @@ import "moment/dist/locale/ar";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWeather } from "./Redux/weatherApiSlice";
 import { RootState, AppDispatch } from "./Redux/store";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
 import { CssBaseline, Typography } from "@mui/material";
 
 export interface IAPI {
@@ -31,12 +31,25 @@ export interface IAPI {
   }[];
 }
 
+// Theme
+const theme = createTheme({
+  typography: {
+    fontFamily: "Rubik",
+  },
+  palette: {
+    primary: {
+      main: "#18181b",
+    },
+  },
+});
+
 function App() {
   const [dateAndTime, setDateAndTime] = useState<string | null>(null);
   const [translate, setTranslate] = useState("en");
   const { t, i18n } = useTranslation();
-
-  const { city, dataWeather, isLoading, errorMassage } = useSelector((state: RootState) => state.weatherApiReducer);
+  const { city, dataWeather, isLoading, errorMassage } = useSelector(
+    (state: RootState) => state.weatherApiReducer
+  );
   const dispatch = useDispatch<AppDispatch>();
 
   const handelTranslateClick = () => {
@@ -58,35 +71,26 @@ function App() {
     setDateAndTime(moment().locale(translate).format("LLLL"));
   }, [translate, dispatch, city]);
 
-  // Theme
-  const theme = createTheme({
-    typography: {
-      fontFamily: "Rubik, sans-serif",
-    },
-    palette: {
-      
-      primary: {
-        main: "#33ABBB",
-      },
-    },
-  });
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="flex flex-col justify-center items-start h-screen bg-gradient-to-r from-cyan-700 to-teal-400">
+      <div className="flex flex-col justify-center items-start h-screen bg-gradient-to-r from-cyan-700 to-teal-400 text-primary">
         <Container maxWidth="sm">
           <div
             dir={translate === "en" ? "ltr" : "rtl"}
-            className="content text-zinc-900 flex flex-col justify-center gap-3"
+            className="content flex flex-col justify-center gap-3"
           >
             <MultipleSelect />
 
             <Box className="font-bold bg-white/20 backdrop-blur-3xl p-5 md:p-10 rounded-lg">
               {/* City And Time */}
               <div className="title flex justify-between items-center mb-3 text-xl">
-                <Typography className="!font-[900]">{t(dataWeather?.country)}</Typography>
-                <Typography className="!text-sm !font-[800]">{dateAndTime}</Typography>
+                <Typography className="!font-[900]">
+                  {t(dataWeather?.country)}
+                </Typography>
+                <Typography className="!text-sm !font-[900]">
+                  {dateAndTime}
+                </Typography>
               </div>
 
               <hr className="my-3" />
@@ -95,22 +99,30 @@ function App() {
               <div className="flex justify-between items-center">
                 <div className="flex flex-col gap-3">
                   <div className="flex flex-col md:flex-row items-start">
-                    <Typography className="!text-5xl !md:text-7xl">
-                      {isLoading ? <CircularProgress className="!text-white" /> : dataWeather?.temp || errorMassage}
-                    </Typography>
+                    <div>
+                      {isLoading ? (
+                        <CircularProgress className="!text-white" />
+                      ) : (
+                        <Typography className="!text-5xl !font-[900]">
+                          {dataWeather?.temp || errorMassage}
+                        </Typography>
+                      )}
+                    </div>
                     {dataWeather?.icon && (
                       <img src={dataWeather.icon} alt="weather icon" />
                     )}
                   </div>
 
-                  <Typography className="!font-[600]">{t(dataWeather?.description) ?? "--"}</Typography>
+                  <Typography className="!font-[300]">
+                    {t(dataWeather?.description) ?? "--"}
+                  </Typography>
 
                   <div className="flex gap-10">
-                    <Typography className="!font-[800]">
-                      {t("Min")} : <b>{dataWeather?.temp_min ?? "--"}</b>
+                    <Typography className="!font-[300]">
+                      {t("Min")} : <b className="!font-[300]">{dataWeather?.temp_min ?? "--"}</b>
                     </Typography>
-                    <Typography className="!font-[800]">
-                      {t("Max")} : <b>{dataWeather?.temp_max ?? "--"}</b>
+                    <Typography className="!font-[300]">
+                      {t("Max")} : <b className="!font-[300]">{dataWeather?.temp_max ?? "--"}</b>
                     </Typography>
                   </div>
                 </div>
@@ -126,7 +138,7 @@ function App() {
             <div dir={translate === "en" ? "ltr" : "rtl"}>
               <Button
                 onClick={handelTranslateClick}
-                className="!font-bold"
+                className="!font-[500]"
                 variant="contained"
               >
                 {translate === "en" ? "ARABIC" : "انجليزى"}

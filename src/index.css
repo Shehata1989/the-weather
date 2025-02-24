@@ -2,21 +2,21 @@
 
 @font-face {
   font-family: "Rubik";
-  src: url("..//fonts/Rubik/Rubik-Regular.ttf");
-  font-wight: 500;
-}
-@font-face {
-  font-family: "Rubik, sans-serif";
-  src: url("../fonts/Rubik/Rubik-Bold.ttf");
-  font-wight: 600;
+  src: url("fonts/Rubik/Rubik-Medium.ttf");
+  font-weight: 300;
 }
 @font-face {
   font-family: "Rubik";
-  src: url("../fonts/Rubik/Rubik-BoldItalic.ttf");
-  font-wight: 800;
+  src: url("fonts/Rubik/Rubik-Bold.ttf");
+  font-weight: 500;
 }
 @font-face {
   font-family: "Rubik";
-  src: url("../fonts/Rubik/Rubik-ExtraBold.ttf");
-  font-wight: 900;
+  src: url("fonts/Rubik/Rubik-BoldItalic.ttf");
+  font-weight: 600;
+}
+@font-face {
+  font-family: "Rubik";
+  src: url("fonts/Rubik/Rubik-ExtraBold.ttf");
+  font-weight: 900;
 }

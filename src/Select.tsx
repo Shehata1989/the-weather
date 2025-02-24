@@ -74,7 +74,7 @@ export default function MultipleSelect() {
     <div>
       <FormControl className="w-full">
         <InputLabel
-          className="!text-zinc-900 !font-semibold"
+          className="!text-zinc-900 !font-[500]"
           id="city-select-label"
         >
           {t("City")}
@@ -86,11 +86,11 @@ export default function MultipleSelect() {
           onChange={handleChange}
           input={<OutlinedInput label="City" />}
           MenuProps={MenuProps}
-          className="!text-zinc-900 !font-semibold"
+          className="!text-primary !font-[500]"
         >
           {cities.map((c) => (
             <MenuItem
-              className="!text-zinc-900 !font-semibold"
+              className="!text-primary !font-[500]"
               key={c.name}
               value={c.name}
             >
