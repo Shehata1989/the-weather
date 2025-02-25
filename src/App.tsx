@@ -113,16 +113,16 @@ function App() {
                     )}
                   </div>
 
-                  <Typography className="!font-[300]">
+                  <Typography className="!font-[500]">
                     {t(dataWeather?.description) ?? "--"}
                   </Typography>
 
                   <div className="flex gap-10">
-                    <Typography className="!font-[300]">
-                      {t("Min")} : <b className="!font-[300]">{dataWeather?.temp_min ?? "--"}</b>
+                    <Typography className="!font-[500]">
+                      {t("Min")} : <b className="!font-[500]">{dataWeather?.temp_min ?? "--"}</b>
                     </Typography>
-                    <Typography className="!font-[300]">
-                      {t("Max")} : <b className="!font-[300]">{dataWeather?.temp_max ?? "--"}</b>
+                    <Typography className="!font-[500]">
+                      {t("Max")} : <b className="!font-[500]">{dataWeather?.temp_max ?? "--"}</b>
                     </Typography>
                   </div>
                 </div>
